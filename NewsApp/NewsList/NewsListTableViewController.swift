@@ -13,10 +13,10 @@ class NewsListTableViewController: UITableViewController {
     // MARK: Properties
     
     private var articles: [Article]? = PersistanceManager.instance.fetchData().sorted{
-        $0.date ?? Date() < $1.date ?? Date()
+        $0.date ?? Date() > $1.date ?? Date()
     }
     
-    let indicator = UIActivityIndicatorView()
+    private let indicator = UIActivityIndicatorView()
     
     // MARK: Lifecycle
     

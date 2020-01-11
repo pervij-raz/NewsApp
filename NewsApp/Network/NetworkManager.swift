@@ -23,7 +23,7 @@ class NetworkManager {
     // MARK: Methods
     
     func loadArticles() {
-        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=fr&apiKey=04cbc856dcdb4bb283e1c204470cd0c3") else {return}
+        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=gb&apiKey=04cbc856dcdb4bb283e1c204470cd0c3") else {return}
         
         AF.request(url).responseJSON { response in
             guard let error = response.error else {

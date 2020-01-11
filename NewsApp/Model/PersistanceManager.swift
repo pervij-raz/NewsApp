@@ -18,6 +18,7 @@ class PersistanceManager {
     var context: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
+    
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Article")
         container.loadPersistentStores(completionHandler: { (_, error) in
@@ -35,7 +36,7 @@ class PersistanceManager {
     
     // MARK: Methods
     
-    func saveContext () {
+    private func saveContext () {
         if context.hasChanges {
             do {
                 try context.save()
@@ -56,7 +57,7 @@ class PersistanceManager {
         NotificationCenter.default.post(name: NSNotification.Name.init("Data is refreshed"), object: nil)
     }
     
-    func createArticle(from data: [String:Any]) -> Article? {
+    private func createArticle(from data: [String:Any]) -> Article? {
         let article = NSEntityDescription.insertNewObject(forEntityName: "Article", into: context) as? Article
         article?.title = data["title"] as? String
         article?.articleDescription = data["description"] as? String
@@ -69,7 +70,7 @@ class PersistanceManager {
         return article
     }
     
-    func findArticle(with title: String?) -> Article? {
+    private func findArticle(with title: String?) -> Article? {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Article")
         let titlePredicate = NSPredicate(format: "title = %@", title ?? "")
         request.predicate = titlePredicate

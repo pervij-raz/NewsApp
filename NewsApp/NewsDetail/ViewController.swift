@@ -14,11 +14,11 @@ class ViewController: UIViewController, WKNavigationDelegate {
     
     // MARK: Properties
     
-    var url: URL?
-    var titleText: String?
-    var descriptionText: String?
-    var articleDate: String?
-    var articleURL: String?
+    private var url: URL?
+    private var titleText: String?
+    private var descriptionText: String?
+    private var articleDate: String?
+    private var articleURL: String?
     
     // MARK: Outlets
     
