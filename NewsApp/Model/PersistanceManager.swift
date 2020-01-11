@@ -43,17 +43,37 @@ class PersistanceManager {
     func createData(from array: [[String:Any]]?) {
         guard let array = array else {return}
         array.forEach {
-            let article = NSEntityDescription.insertNewObject(forEntityName: "Article", into: context) as? Article
-            article?.title = $0["title"] as? String
-            article?.articleDescription = $0["description"] as? String
-            article?.imageURl = $0["urlToImage"] as? String
-            article?.articleURL = $0["url"] as? String
-            let dateString = $0["publishedAt"] as? String
-            let dateFormatter = ISO8601DateFormatter()
-            let date = dateFormatter.date(from:dateString!)!
-            article?.date = date
+            let title = $0["title"] as? String
+            _ = findArticle(with: title) ?? createArticle(from: $0)
+            saveContext()
         }
-        saveContext()
+        NotificationCenter.default.post(name: NSNotification.Name.init("Data is refreshed"), object: nil)
+    }
+    
+    func createArticle(from data: [String:Any]) -> Article? {
+        let article = NSEntityDescription.insertNewObject(forEntityName: "Article", into: context) as? Article
+        article?.title = data["title"] as? String
+        article?.articleDescription = data["description"] as? String
+        article?.imageURl = data["urlToImage"] as? String
+        article?.articleURL = data["url"] as? String
+        let dateString = data["publishedAt"] as? String
+        let dateFormatter = ISO8601DateFormatter()
+        let date = dateFormatter.date(from:dateString!)!
+        article?.date = date
+        return article
+    }
+    
+    func findArticle(with title: String?) -> Article? {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Article")
+        let titlePredicate = NSPredicate(format: "title = %@", title ?? "")
+        request.predicate = titlePredicate
+        do {
+            let articles = try context.fetch(request) as? [Article]
+            return articles?.first
+        } catch let error {
+            print(error)
+        }
+        return nil
     }
     
     func fetchData() -> [Article] {
