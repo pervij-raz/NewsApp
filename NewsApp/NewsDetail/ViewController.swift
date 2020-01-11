@@ -8,39 +8,56 @@
 
 import UIKit
 import SDWebImage
+import WebKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, WKNavigationDelegate {
+    
+    // MARK: Properties
     
     var url: URL?
     var titleText: String?
     var descriptionText: String?
     var articleDate: String?
+    var articleURL: String?
+    
+    // MARK: Outlets
     
     @IBOutlet weak var articleImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
+    // MARK: Methods
+    
     @IBAction func openLinkButton(_ sender: UIButton) {
+        let webView = WKWebView()
+        webView.navigationDelegate = self
+        view = webView
+        guard let url = URL(string: articleURL ?? "") else {return}
+        webView.load(URLRequest(url: url))
+        webView.allowsBackForwardNavigationGestures = false
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.navigationItem.title = articleDate
-         articleImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"), options: [], context: nil)
-        titleLabel.text = titleText
-        descriptionLabel.text = descriptionText
-    }
-
     func setup(with article: Article) {
         url = URL(string: article.imageURl ?? "")
         titleText = article.title
         descriptionText = article.articleDescription
+        articleURL = article.articleURL
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yy HH:mm"
         if article.date != nil {
             articleDate = dateFormatter.string(from: article.date!)
         }
     }
-
+    
+    // MARK: Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationItem.title = articleDate
+        articleImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"), options: [], context: nil)
+        titleLabel.text = titleText
+        descriptionLabel.text = descriptionText
+    }
+    
 }
 

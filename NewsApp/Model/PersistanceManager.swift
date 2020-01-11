@@ -11,10 +11,9 @@ import CoreData
 
 class PersistanceManager {
     
-    static let instance = PersistanceManager()
+    // MARK: Properties
     
-    private init(){
-    }
+    static let instance = PersistanceManager()
     
     var context: NSManagedObjectContext {
         return persistentContainer.viewContext
@@ -28,6 +27,13 @@ class PersistanceManager {
         })
         return container
     }()
+    
+    // MARK: Init
+    
+    private init(){
+    }
+    
+    // MARK: Methods
     
     func saveContext () {
         if context.hasChanges {

@@ -11,10 +11,16 @@ import Alamofire
 
 class NetworkManager {
     
+    // MARK: Properties
+    
     static let instance = NetworkManager()
+    
+    // MARK: Init
     
     private init(){
     }
+    
+    // MARK: Methods
     
     func loadArticles() {
         guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=fr&apiKey=04cbc856dcdb4bb283e1c204470cd0c3") else {return}
