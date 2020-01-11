@@ -97,7 +97,7 @@
         <!--View Controller-->
         <scene sceneID="vkZ-Ak-JfR">
             <objects>
-                <viewController storyboardIdentifier="NewsDetailScreen" id="DtC-tF-ZhA" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewsDetailScreen" id="DtC-tF-ZhA" customClass="ViewController" customModule="NewsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZQo-QR-VmO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

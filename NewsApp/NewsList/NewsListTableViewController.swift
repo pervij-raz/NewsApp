@@ -12,6 +12,7 @@ class NewsListTableViewController: UITableViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        NetworkManager.instance.loadArticles()
     }
     
     // MARK: - Table view data source
