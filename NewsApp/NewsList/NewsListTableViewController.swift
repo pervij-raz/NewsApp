@@ -49,7 +49,7 @@ class NewsListTableViewController: UITableViewController {
     
     @objc private func refreshNews() {
         articles = PersistanceManager.instance.fetchData().sorted{
-            $0.date ?? Date() < $1.date ?? Date()
+            $0.date ?? Date() > $1.date ?? Date()
         }
         tableView.reloadData()
         tableView.refreshControl?.endRefreshing()
